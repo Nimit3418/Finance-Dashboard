@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useFinance } from '../../context/FinanceContext';
-import { X, Plus, Calendar, DollarSign, Tag, FileText, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
+import { X, Plus, Calendar, DollarSign, Tag, FileText, ArrowDownLeft, ArrowUpRight, Pencil } from 'lucide-react';
 
 // ── Fintech-Safe Solid Colors (no gradients) ──
 const EMERALD = '#28c1a0';
@@ -10,8 +10,8 @@ const EMERALD_SHADOW = '0 4px 16px rgba(40,193,160,0.35)';
 // Top accent bar: solid emerald stripe
 const ACCENT_BAR = EMERALD;
 
-export default function AddTransactionModal({ isOpen, onClose }) {
-  const { addTransaction, CATEGORIES, theme } = useFinance();
+export default function AddTransactionModal({ isOpen, onClose, initialData }) {
+  const { addTransaction, editTransaction, CATEGORIES, theme } = useFinance();
   const isLight = theme === 'light';
 
   const [form, setForm] = useState({
@@ -32,16 +32,41 @@ export default function AddTransactionModal({ isOpen, onClose }) {
     return Object.keys(errs).length === 0;
   };
 
+  useEffect(() => {
+    if (isOpen) {
+      if (initialData) {
+        setForm({
+          title: initialData.title,
+          amount: initialData.amount,
+          category: initialData.category,
+          type: initialData.type,
+          date: initialData.date,
+        });
+      } else {
+        setForm({ title: '', amount: '', category: 'Groceries', type: 'expense', date: new Date().toISOString().split('T')[0] });
+      }
+      setErrors({});
+    }
+  }, [isOpen, initialData]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!validate()) return;
-    addTransaction({
+    
+    const payload = {
       title: form.title.trim(),
       amount: Number(form.amount),
       category: form.category,
       type: form.type,
       date: form.date,
-    });
+    };
+
+    if (initialData) {
+      editTransaction(initialData.id, payload);
+    } else {
+      addTransaction(payload);
+    }
+    
     setForm({ title: '', amount: '', category: 'Groceries', type: 'expense', date: new Date().toISOString().split('T')[0] });
     setErrors({});
     onClose();
@@ -147,14 +172,18 @@ export default function AddTransactionModal({ isOpen, onClose }) {
                   className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: EMERALD, boxShadow: EMERALD_SHADOW }}
                 >
-                  <Plus className="w-5 h-5 text-white" strokeWidth={2} />
+                  {initialData ? (
+                    <Pencil className="w-4 h-4 text-white" strokeWidth={2} />
+                  ) : (
+                    <Plus className="w-5 h-5 text-white" strokeWidth={2} />
+                  )}
                 </div>
                 <div>
                   <h2 className="text-base font-bold tracking-tight" style={{ color: headingColor }}>
-                    Add Transaction
+                    {initialData ? 'Edit Transaction' : 'Add Transaction'}
                   </h2>
                   <p className="text-[11px] font-medium" style={{ color: subColor }}>
-                    Create a new transaction entry
+                    {initialData ? 'Update transaction details' : 'Create a new transaction entry'}
                   </p>
                 </div>
               </div>
@@ -279,8 +308,7 @@ export default function AddTransactionModal({ isOpen, onClose }) {
                 </select>
               </div>
 
-              {/* Submit — Solid Emerald */}
-              <motion.button
+                <motion.button
                 type="submit"
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.97 }}
@@ -289,8 +317,12 @@ export default function AddTransactionModal({ isOpen, onClose }) {
                 onMouseEnter={(e) => { e.currentTarget.style.background = EMERALD_HOVER; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = EMERALD; }}
               >
-                <Plus className="w-4 h-4" strokeWidth={2} />
-                Add Transaction
+                {initialData ? (
+                  <Pencil className="w-4 h-4" strokeWidth={2} />
+                ) : (
+                  <Plus className="w-4 h-4" strokeWidth={2} />
+                )}
+                {initialData ? 'Save Changes' : 'Add Transaction'}
               </motion.button>
             </form>
           </motion.div>

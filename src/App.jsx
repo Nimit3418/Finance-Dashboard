@@ -31,14 +31,14 @@ function DashboardPage() {
   );
 }
 
-function TransactionsPage({ onAddClick }) {
+function TransactionsPage({ onAddClick, onEditClick }) {
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-7">
       <div>
         <h2 className="text-4xl font-bold text-text-primary tracking-tighter">Transactions</h2>
         <p className="text-base text-text-muted mt-1.5 font-medium">Manage and track all your transactions</p>
       </div>
-      <TransactionList onAddClick={onAddClick} />
+      <TransactionList onAddClick={onAddClick} onEditClick={onEditClick} />
     </motion.div>
   );
 }
@@ -46,6 +46,7 @@ function TransactionsPage({ onAddClick }) {
 function AppContent() {
   const [activePage, setActivePage] = useState('dashboard');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [editingTransaction, setEditingTransaction] = useState(null);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const { theme } = useFinance();
   const isLight = theme === 'light';
@@ -55,7 +56,7 @@ function AppContent() {
       case 'dashboard':
         return <DashboardPage key="dashboard" />;
       case 'transactions':
-        return <TransactionsPage key="transactions" onAddClick={() => setShowAddModal(true)} />;
+        return <TransactionsPage key="transactions" onAddClick={() => setShowAddModal(true)} onEditClick={(t) => { setEditingTransaction(t); setShowAddModal(true); }} />;
       case 'insights':
         return (
           <motion.div key="insights" variants={pageVariants} initial="initial" animate="animate" exit="exit">
@@ -158,7 +159,11 @@ function AppContent() {
 
       {/* Global Overlays */}
       <AIChatDrawer />
-      <AddTransactionModal isOpen={showAddModal} onClose={() => setShowAddModal(false)} />
+      <AddTransactionModal 
+        isOpen={showAddModal} 
+        onClose={() => { setShowAddModal(false); setEditingTransaction(null); }} 
+        initialData={editingTransaction}
+      />
     </div>
   );
 }

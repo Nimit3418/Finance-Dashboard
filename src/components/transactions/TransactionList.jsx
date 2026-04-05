@@ -50,7 +50,7 @@ function EmptyState() {
   );
 }
 
-export default function TransactionList({ onAddClick }) {
+export default function TransactionList({ onAddClick, onEditClick }) {
   const {
     paginatedTransactions,
     filteredTransactions,
@@ -323,6 +323,7 @@ export default function TransactionList({ onAddClick }) {
                           <div className="flex items-center justify-end gap-2">
                             {/* Edit — Cyan tinted */}
                             <button
+                              onClick={() => onEditClick(t)}
                               className="w-9 h-9 rounded-xl flex items-center justify-center transition-all bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20"
                               aria-label="Edit transaction"
                             >
@@ -378,15 +379,23 @@ export default function TransactionList({ onAddClick }) {
                     )}>
                       {t.type === 'income' ? '+' : '-'}{formatCurrency(t.amount)}
                     </p>
-                    {/* Admin delete — always visible on mobile too */}
+                    {/* Admin actions — always visible on mobile too */}
                     {userRole === 'admin' && (
-                      <button
-                        onClick={() => deleteTransaction(t.id)}
-                        className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
-                        style={{ color: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)' }}
-                      >
-                        Delete
-                      </button>
+                      <div className="flex items-center gap-2 mt-1">
+                        <button
+                          onClick={() => onEditClick(t)}
+                          className="text-[11px] font-semibold px-2 py-0.5 rounded-md text-cyan-400 bg-cyan-500/10"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => deleteTransaction(t.id)}
+                          className="text-[11px] font-semibold px-2 py-0.5 rounded-md"
+                          style={{ color: '#10B981', backgroundColor: 'rgba(16,185,129,0.1)' }}
+                        >
+                          Delete
+                        </button>
+                      </div>
                     )}
                   </div>
                 </motion.div>
