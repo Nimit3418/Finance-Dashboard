@@ -69,22 +69,26 @@ export default function AIChatDrawer() {
           clearInterval(typeIntervalRef.current);
           setIsAutoTyping(false);
           const now = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
-          setMessages((prev) => [
-            ...prev,
-            {
+          setMessages((prev) => {
+            if (prev.some(m => m.content === WELCOME_MSG)) return prev;
+            return [...prev, {
               id: Date.now(),
               role: 'ai',
               content: WELCOME_MSG,
               time: now,
               chips: ['Optimize Budget', 'Cloud Breakdown'],
-            },
-          ]);
+            }];
+          });
           setTypingText('');
         }
-      }, 28); // ~28ms per char ≈ 2.5s for the full message
+      }, 28);
     }
+  }, [isChatOpen, hasAutoTyped]);
+
+  // Clean up only on unmount
+  useEffect(() => {
     return () => clearInterval(typeIntervalRef.current);
-  }, [isChatOpen]); // eslint-disable-line
+  }, []);
 
   useEffect(() => {
     if (isChatOpen) {

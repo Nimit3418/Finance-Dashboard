@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useFinance } from '../../context/FinanceContext';
 import GlassCard from '../ui/GlassCard';
-import { TrendingUp, TrendingDown, ArrowDownLeft, ArrowUpRight, Percent } from 'lucide-react';
+import { TrendingUp, TrendingDown, ArrowDownLeft, ArrowUpRight, Percent, Sparkles } from 'lucide-react';
 import { Area, AreaChart, ResponsiveContainer } from 'recharts';
 
 const containerVariants = {
@@ -45,7 +45,7 @@ function formatCurrency(amount) {
 }
 
 export default function StatCards() {
-  const { insights } = useFinance();
+  const { insights, setIsChatOpen } = useFinance();
   const {
     totalIncome, totalExpenses, savingsRate,
     monthlyTrend, incomeSparkline, expenseSparkline, savingsSparkline,
@@ -134,6 +134,16 @@ export default function StatCards() {
                     )}
                   </div>
                 </div>
+                {card.title === 'Savings Rate' && (
+                  <button 
+                    onClick={() => setIsChatOpen(true)}
+                    title="Zorvyn AI has analyzed this trend. Click for details."
+                    className="bg-[#805ed9]/10 text-[#805ed9] px-2 py-1 rounded-full text-[10px] font-bold border border-[#805ed9]/20 flex items-center gap-1 transition-all hover:bg-[#805ed9]/20 hover:scale-[1.03]"
+                  >
+                    <Sparkles className="w-3 h-3" strokeWidth={2} />
+                    AI: OPTIMIZED
+                  </button>
+                )}
               </div>
               <div>
                 <p className="text-3xl font-bold text-text-primary tracking-tighter">{card.value}</p>

@@ -10,6 +10,7 @@ import TransactionList from './components/transactions/TransactionList';
 import AddTransactionModal from './components/transactions/AddTransactionModal';
 import InsightsPage from './components/dashboard/InsightsPage';
 import AIChatDrawer from './components/layout/AIChatDrawer';
+import { Sparkles } from 'lucide-react';
 import './index.css';
 
 const pageVariants = {
@@ -19,11 +20,20 @@ const pageVariants = {
 };
 
 function DashboardPage() {
+  const { setIsChatOpen } = useFinance();
+
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-7">
       <div>
         <h2 className="text-4xl font-bold text-text-primary tracking-tighter">Dashboard</h2>
         <p className="text-base text-text-muted mt-1.5 font-medium">Your financial overview at a glance</p>
+        <button 
+          onClick={() => setIsChatOpen(true)}
+          className="text-slate-500 text-sm italic mt-3 hover:text-[#805ed9] transition-colors flex items-center gap-1.5 focus:outline-none text-left"
+        >
+          <Sparkles className="w-4 h-4 text-[#805ed9]" strokeWidth={1.5} />
+          Zorvyn AI: Your spending in 'Utilities' is 5% lower this week. Keep it up!
+        </button>
       </div>
       <StatCards />
       <ChartSection />
@@ -32,11 +42,20 @@ function DashboardPage() {
 }
 
 function TransactionsPage({ onAddClick, onEditClick }) {
+  const { setIsChatOpen } = useFinance();
+
   return (
     <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit" className="space-y-7">
       <div>
         <h2 className="text-4xl font-bold text-text-primary tracking-tighter">Transactions</h2>
         <p className="text-base text-text-muted mt-1.5 font-medium">Manage and track all your transactions</p>
+        <button 
+          onClick={() => setIsChatOpen(true)}
+          className="text-slate-500 text-sm italic mt-3 hover:text-[#805ed9] transition-colors flex items-center gap-1.5 focus:outline-none text-left"
+        >
+          <Sparkles className="w-4 h-4 text-[#805ed9]" strokeWidth={1.5} />
+          Zorvyn AI: Found 3 duplicate subscriptions last month. Click to optimize.
+        </button>
       </div>
       <TransactionList onAddClick={onAddClick} onEditClick={onEditClick} />
     </motion.div>

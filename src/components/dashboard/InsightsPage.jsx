@@ -21,24 +21,21 @@ function formatCurrency(amount) {
 }
 
 // ── Zorvyn AI Badge ──
-function ZorvynBadge() {
+function ZorvynBadge({ onClick }) {
   return (
-    <span
-      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide flex-shrink-0"
-      style={{
-        background: 'linear-gradient(135deg, rgba(14,165,233,0.14) 0%, rgba(16,185,129,0.10) 100%)',
-        border: '1px solid rgba(14,165,233,0.22)',
-        color: '#0EA5E9',
-      }}
+    <button 
+      onClick={onClick}
+      disabled={!onClick}
+      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide flex-shrink-0 bg-[#805ed9]/10 border border-[#805ed9]/20 text-[#805ed9] ${onClick ? 'cursor-pointer hover:bg-[#805ed9]/20 transition-colors' : 'cursor-default'}`}
     >
       <Sparkles className="w-2.5 h-2.5 no-transition" strokeWidth={1.5} />
       Zorvyn AI
-    </span>
+    </button>
   );
 }
 
 export default function InsightsPage() {
-  const { insights, transactions, theme } = useFinance();
+  const { insights, transactions, theme, setIsChatOpen } = useFinance();
   const isLight = theme === 'light';
   const {
     totalIncome,
@@ -121,7 +118,7 @@ export default function InsightsPage() {
             AI-powered analysis of your financial health
           </p>
         </div>
-        <ZorvynBadge />
+        <ZorvynBadge onClick={() => setIsChatOpen(true)} />
       </motion.div>
 
       {/* ── Key Insights Grid ── */}
@@ -168,7 +165,7 @@ export default function InsightsPage() {
                 <h3 className="text-base font-bold tracking-tight" style={{ color: primaryText }}>
                   Savings Analysis
                 </h3>
-                <ZorvynBadge />
+                <ZorvynBadge onClick={() => setIsChatOpen(true)} />
               </div>
               <p className="text-xs font-medium" style={{ color: mutedText }}>
                 Income vs Expenditure health check
@@ -262,7 +259,7 @@ export default function InsightsPage() {
               <h3 className="text-base font-bold tracking-tight" style={{ color: primaryText }}>
                 Category Rankings
               </h3>
-              <ZorvynBadge />
+              <ZorvynBadge onClick={() => setIsChatOpen(true)} />
             </div>
             <p className="text-xs font-medium" style={{ color: mutedText }}>
               Where your money goes the most

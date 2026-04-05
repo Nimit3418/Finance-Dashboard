@@ -5,12 +5,12 @@ import { exportAsCSV, exportAsJSON } from '../../utils/exportUtils';
 import { useState } from 'react';
 
 // ── Fintech-Safe Solid Colors ──
-const EMERALD        = '#10B981';
-const INDIGO         = '#6366F1';   // Download button
-const INDIGO_HOVER   = '#4F46E5';
-const CYAN           = '#0EA5E9';   // AI Copilot button
-const CYAN_HOVER     = '#0284C7';
-const SLATE_ACTIVE   = '#334155';   // Role toggle active
+const EMERALD = '#10B981';
+const INDIGO = '#6366F1';   // Download button
+const INDIGO_HOVER = '#4F46E5';
+const CYAN = '#0EA5E9';   // AI Copilot button
+const CYAN_HOVER = '#0284C7';
+const SLATE_ACTIVE = '#334155';   // Role toggle active
 
 export default function TopBar({ onMenuClick }) {
   const {
@@ -25,17 +25,17 @@ export default function TopBar({ onMenuClick }) {
   const isLight = theme === 'light';
 
   // ── Context-sensitive chrome tokens ──
-  const headerBg     = isLight ? 'rgba(241,245,249,0.97)' : 'rgba(2,6,23,0.92)';
-  const headerBorder = isLight ? 'rgba(203,213,225,0.8)'  : 'rgba(16,185,129,0.10)';
-  const inputBg      = isLight ? 'rgba(255,255,255,0.9)'  : 'rgba(255,255,255,0.03)';
-  const inputBorder  = isLight ? '#CBD5E1'                : 'rgba(255,255,255,0.07)';
-  const inputText    = isLight ? '#0F172A'                : '#e2e8f0';
-  const btnBg        = isLight ? 'rgba(0,0,0,0.05)'       : 'rgba(255,255,255,0.05)';
-  const btnBorder    = isLight ? 'rgba(0,0,0,0.10)'       : 'rgba(255,255,255,0.08)';
-  const mutedColor   = isLight ? '#64748B'                : '#6B7280';
+  const headerBg = isLight ? 'rgba(241,245,249,0.97)' : 'rgba(2,6,23,0.92)';
+  const headerBorder = isLight ? 'rgba(203,213,225,0.8)' : 'rgba(16,185,129,0.10)';
+  const inputBg = isLight ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.03)';
+  const inputBorder = isLight ? '#CBD5E1' : 'rgba(255,255,255,0.07)';
+  const inputText = isLight ? '#0F172A' : '#e2e8f0';
+  const btnBg = isLight ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)';
+  const btnBorder = isLight ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.08)';
+  const mutedColor = isLight ? '#64748B' : '#6B7280';
 
   // Segmented control (Admin / Viewer) - Slate active in both modes
-  const segActiveBg     = SLATE_ACTIVE;
+  const segActiveBg = SLATE_ACTIVE;
   const segActiveShadow = '0 2px 8px rgba(51,65,85,0.4)';
 
   return (
@@ -45,10 +45,10 @@ export default function TopBar({ onMenuClick }) {
       transition={{ duration: 0.4 }}
       className="sticky top-0 z-40 px-6 py-3"
       style={{
-        background:             headerBg,
-        backdropFilter:         'blur(24px)',
-        WebkitBackdropFilter:   'blur(24px)',
-        borderBottom:           `1px solid ${headerBorder}`,
+        background: headerBg,
+        backdropFilter: 'blur(24px)',
+        WebkitBackdropFilter: 'blur(24px)',
+        borderBottom: `1px solid ${headerBorder}`,
       }}
     >
       {/*
@@ -61,11 +61,10 @@ export default function TopBar({ onMenuClick }) {
         {/* Mobile menu */}
         <button
           onClick={onMenuClick}
-          className={`md:hidden w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${
-            isLight 
-              ? 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200' 
-              : 'bg-white/10 text-white border border-white/10 hover:bg-white/20'
-          }`}
+          className={`md:hidden w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 transition-all ${isLight
+            ? 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200'
+            : 'bg-white/10 text-white border border-white/10 hover:bg-white/20'
+            }`}
           aria-label="Toggle menu"
         >
           <Menu className="w-5 h-5" strokeWidth={1.5} />
@@ -82,11 +81,10 @@ export default function TopBar({ onMenuClick }) {
             placeholder="Search transactions..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className={`w-full pl-11 pr-4 py-3 rounded-xl text-[14px] font-medium focus:outline-none transition-all ${
-              isLight
-                ? 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20'
-                : 'bg-white/10 text-white border border-white/10 hover:bg-white/20 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20'
-            }`}
+            className={`w-full pl-11 pr-4 py-3 rounded-xl text-[14px] font-medium focus:outline-none transition-all ${isLight
+              ? 'bg-white text-slate-700 border border-slate-300 shadow-sm hover:border-slate-400 focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20'
+              : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.06] hover:border-white/[0.15] focus:bg-white/[0.06] focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20'
+              }`}
           />
         </div>
 
@@ -98,24 +96,23 @@ export default function TopBar({ onMenuClick }) {
             className="flex items-center p-1 rounded-xl gap-0.5 flex-shrink-0"
             style={{
               background: btnBg,
-              border:     `1px solid ${btnBorder}`,
-              width:      '195px',
+              border: `1px solid ${btnBorder}`,
+              width: '195px',
             }}
           >
             {[
-              { label: 'Admin',  value: 'admin',  Icon: Shield },
-              { label: 'Viewer', value: 'viewer', Icon: Eye    },
+              { label: 'Admin', value: 'admin', Icon: Shield },
+              { label: 'Viewer', value: 'viewer', Icon: Eye },
             ].map(({ label, value, Icon }) => {
               const isActive = userRole === value;
               return (
                 <button
                   key={value}
                   onClick={() => !isActive && toggleRole()}
-                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-[#437cef] text-white shadow-[0_0_15px_rgba(67,124,239,0.3)]' 
-                      : isLight ? 'text-slate-500 hover:text-slate-800' : 'text-slate-400 hover:text-white'
-                  }`}
+                  className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 ${isActive
+                    ? 'bg-[#437cef] text-white shadow-[0_0_15px_rgba(67,124,239,0.3)]'
+                    : isLight ? 'text-slate-500 hover:text-slate-800' : 'text-slate-400 hover:text-white'
+                    }`}
                 >
                   <Icon className="w-3.5 h-3.5" strokeWidth={1.5} />
                   {label}
@@ -129,11 +126,10 @@ export default function TopBar({ onMenuClick }) {
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={() => setShowExport(!showExport)}
-              className={`w-full h-full rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition-all ${
-                isLight 
-                  ? 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200' 
-                  : 'bg-white/10 text-white border border-white/10 hover:bg-white/20'
-              }`}
+              className={`w-full h-full rounded-xl flex items-center justify-center gap-2 text-sm font-semibold transition-all ${isLight
+                ? 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200'
+                : 'bg-white/10 text-white border border-white/10 hover:bg-white/20'
+                }`}
               aria-label="Download data"
             >
               <Download className="w-4 h-4" strokeWidth={2} />
@@ -144,13 +140,13 @@ export default function TopBar({ onMenuClick }) {
               {showExport && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95, y: 6 }}
-                  animate={{ opacity: 1, scale: 1,    y: 0 }}
-                  exit={{   opacity: 0, scale: 0.95, y: 6 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95, y: 6 }}
                   transition={{ duration: 0.15 }}
                   className="absolute right-0 top-[calc(100%+8px)] w-full rounded-2xl overflow-hidden shadow-2xl z-50"
                   style={{
-                    background:   isLight ? 'rgba(255,255,255,0.99)' : 'rgba(10,15,30,0.98)',
-                    border:       `1px solid ${isLight ? 'rgba(203,213,225,0.8)' : 'rgba(99,102,241,0.14)'}`,
+                    background: isLight ? 'rgba(255,255,255,0.99)' : 'rgba(10,15,30,0.98)',
+                    border: `1px solid ${isLight ? 'rgba(203,213,225,0.8)' : 'rgba(99,102,241,0.14)'}`,
                     backdropFilter: 'blur(20px)',
                   }}
                 >

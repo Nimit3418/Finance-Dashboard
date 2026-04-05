@@ -126,9 +126,12 @@ export default function TransactionList({ onAddClick, onEditClick }) {
               placeholder="Quick search..."
               value={searchTerm}
               onChange={(e) => { setSearchTerm(e.target.value); setCurrentPage(1); }}
-              className="w-full sm:w-60 pl-10 pr-3 py-2.5 rounded-xl bg-surface border border-border-glass text-sm text-text-primary placeholder:text-text-muted focus:outline-none transition-all"
-              onFocus={(e) => { e.target.style.borderColor = 'rgba(14,165,233,0.4)'; }}
-              onBlur={(e) => { e.target.style.borderColor = ''; }}
+              className={twMerge(
+                "w-full sm:w-60 pl-10 pr-3 py-2.5 rounded-xl text-sm transition-all focus:outline-none placeholder:font-normal",
+                isLight
+                  ? "bg-white border border-slate-300 text-slate-900 placeholder:text-slate-400 shadow-sm focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10"
+                  : "bg-white/[0.08] border border-white/15 text-white placeholder:text-white/30 focus:bg-white/[0.12] focus:border-cyan-500/40 focus:ring-2 focus:ring-cyan-500/10"
+              )}
             />
           </div>
 
